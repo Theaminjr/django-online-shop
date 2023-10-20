@@ -1,5 +1,6 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from core.api.auth import login_required
 from product.api.serializers import ProductCardSerializer,ProductDetailsSerializer,CategorySerializer,CommentSerializer
 from product.models import Product,Category,Discount,Comment
 from django.core.paginator import Paginator
@@ -35,7 +36,9 @@ class ProductCommentsView(APIView):
         comments = Comment.objects.filter(product=product)
         serializer = CommentSerializer(comments,many=True)
         return Response(serializer.data,status=200)
+    
     #post comment for a specific product
+    @login_required
     def post(self,request,id):
         try:
            product = Product.objects.get(id=id)
