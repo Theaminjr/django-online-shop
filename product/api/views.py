@@ -33,7 +33,7 @@ class ProductCommentsView(APIView):
            product = Product.objects.get(id=id)
         except:
             return Response(status=404)
-        comments = Comment.objects.filter(product=product)
+        comments = Comment.objects.filter(product=product,approved =True)
         serializer = CommentSerializer(comments,many=True)
         return Response(serializer.data,status=200)
     

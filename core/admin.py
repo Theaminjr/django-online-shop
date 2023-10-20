@@ -28,3 +28,4 @@ class UserAdmin(UserAdmin):
     ordering = ("phone_number",)
 
 admin.site.register(User, UserAdmin)
+admin.site.site_header = 'Online Shop'
