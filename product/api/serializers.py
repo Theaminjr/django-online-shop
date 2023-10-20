@@ -60,4 +60,5 @@ class CommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comment
         fields = '__all__'
-        depth = 1
+        read_only_fields = ('user',)
+        extra_kwargs = {'product': {'required': False}} 

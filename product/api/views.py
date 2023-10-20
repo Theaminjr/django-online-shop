@@ -24,17 +24,29 @@ class ProductDetailView(APIView):
         serializer = ProductDetailsSerializer(product)
         return Response(serializer.data,status=200)
 
-#get comments for a specific product
-class ProductCommentsView(APIView):
 
+class ProductCommentsView(APIView):
+    #get comments for a specific product
     def get(self,request,id):
         try:
            product = Product.objects.get(id=id)
         except:
             return Response(status=404)
         comments = Comment.objects.filter(product=product)
-        serializer = CommentSerializer(comments)
+        serializer = CommentSerializer(comments,many=True)
         return Response(serializer.data,status=200)
+    #post comment for a specific product
+    def post(self,request,id):
+        try:
+           product = Product.objects.get(id=id)
+        except:
+            return Response(status=404)
+        serializer = CommentSerializer(data = request.data)
+        if serializer.is_valid():
+            serializer.save(user = request.jwt ,product=product)
+            return Response(status=201)
+        return Response(status=404)
+
 
 #return categoris without parent if id not provided/ return all th subcategories for the category which its id is provided
 class CategoryListView(APIView):

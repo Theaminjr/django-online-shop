@@ -1,5 +1,5 @@
 from django.urls import path
-from product.api.views import ProductCardView,ProductDetailView,CategoryListView,CategoryProductView,ProductDiscountView
+from product.api.views import ProductCardView,ProductDetailView,CategoryListView,CategoryProductView,ProductDiscountView,ProductCommentsView
 
 urlpatterns = [
     path('',ProductCardView.as_view()), # all products
@@ -8,4 +8,5 @@ urlpatterns = [
     path('categories/',CategoryListView.as_view()),# return categories without parent
     path('categories/<int:id>/',CategoryListView.as_view()),# return all the subcategories for a category
     path('discount/',ProductDiscountView.as_view()),# products with discount
+    path('<int:id>/comments/',ProductCommentsView.as_view())#get comments for a product or create new ones
 ]
